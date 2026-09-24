@@ -9,6 +9,17 @@ interface Props {
 }
 
 const { game } = Astro.props;
+const animalAvatars = [
+    { emoji: '🦊', name: 'Fox' },
+    { emoji: '🐼', name: 'Panda' },
+    { emoji: '🐨', name: 'Koala' },
+    { emoji: '🦁', name: 'Lion' },
+    { emoji: '🐯', name: 'Tiger' },
+    { emoji: '🐸', name: 'Frog' },
+    { emoji: '🐙', name: 'Octopus' },
+    { emoji: '🦉', name: 'Owl' },
+] as const;
+const avatar = animalAvatars[game.id % animalAvatars.length];
 ---
 
 <a
@@ -24,7 +35,15 @@ const { game } = Astro.props;
         <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         <div class="relative z-10">
             <div class="flex items-start justify-between gap-3 mb-2">
-                <h3 class="text-xl font-semibold text-slate-100 group-hover:text-blue-400 transition-colors" data-testid="game-title">{game.title}</h3>
+                <div class="flex items-center gap-3 min-w-0">
+                    <span
+                        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-600 bg-slate-900/80 text-2xl shadow-inner"
+                        role="img"
+                        aria-label={`${avatar.name} avatar for ${game.title}`}
+                        data-testid="game-avatar"
+                    >{avatar.emoji}</span>
+                    <h3 class="text-xl font-semibold text-slate-100 group-hover:text-blue-400 transition-colors" data-testid="game-title">{game.title}</h3>
+                </div>
                 <StarRating rating={game.starRating} />
             </div>
 

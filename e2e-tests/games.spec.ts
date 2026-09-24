@@ -58,6 +58,14 @@ test.describe('Game Listing and Navigation', () => {
       await expect(gameCards.first().getByTestId('game-title')).not.toBeEmpty();
     });
 
+    await test.step('Verify every game card has an animal avatar', async () => {
+      const gameCards = page.getByTestId('game-card');
+      const avatars = page.getByTestId('game-avatar');
+      await expect(avatars).toHaveCount(await gameCards.count());
+      await expect(avatars.first()).toHaveAttribute('role', 'img');
+      await expect(avatars.first()).toHaveAttribute('aria-label', /avatar for/);
+    });
+
     await test.step('Verify game cards display star ratings', async () => {
       const firstGameCard = page.getByTestId('game-card').first();
       await expect(firstGameCard.getByTestId('game-rating')).toBeVisible();
